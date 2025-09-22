@@ -1,15 +1,5 @@
 # To-Do-List-API
-What you get
-
-server.js — app entry (Express + middleware + routes)
-models/Todo.js — Mongoose todo schema
-routes/todos.js — CRUD + filters + pagination endpoints
-package.json dependencies + scripts
-example .env variables and curl examples
-
 1) package.json
-Create package.json (or run npm init -y) then install packages:
-npm install express mongoose dotenv body-parser cors express-validator
 
 # optional dev:
 npm install --save-dev nodemon
@@ -35,19 +25,14 @@ package.json (snippet):
 
 2) .env
 Create .env at project root:
-
 PORT=4000
 MONGO_URI=mongodb://localhost:27017/todo_db
-
-
-(Replace MONGO_URI with your remote MongoDB connection string if needed.)
 
 3) models/Todo.js
 Create folder models/ and file Todo.js:
 
 // models/Todo.js
 const mongoose = require('mongoose');
-
 const TodoSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true },
   description: { type: String, default: '', trim: true },
@@ -58,12 +43,10 @@ const TodoSchema = new mongoose.Schema({
   // optional user field (if you add auth later)
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null }
 }, { timestamps: true });
-
 module.exports = mongoose.model('Todo', TodoSchema);
 
 4) routes/todos.js
 Create folder routes/ and file todos.js:
-
 // routes/todos.js
 const express = require('express');
 const router = express.Router();
@@ -231,13 +214,6 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 6) Quick test with curl
 Start server: npm run dev (if using nodemon) or npm start.
-
-Create a todo:
-
-curl -X POST http://localhost:4000/api/todos \
-  -H "Content-Type: application/json" \
-  -d '{"title":"Finish assignment","description":"Finish ToDo API","dueDate":"2025-09-30","priority":"high","tags":["school","backend"]}'
-
 List todos (first page):
 curl "http://localhost:4000/api/todos?page=1&limit=10"
 
@@ -263,5 +239,4 @@ curl "http://localhost:4000/api/todos?q=assignment"
 
 
 Filter by priority:
-
 curl "http://localhost:4000/api/todos?priority=high"
